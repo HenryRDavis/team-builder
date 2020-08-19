@@ -1,26 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import Members from './Members'
+import MembersForm from './MembersForm'
 
-function App() {
+const form = {
+  username: '',
+  email: '',
+  role: '',
+  }
+
+export default function App() {
+  const [members, setMembers] = useState([])
+  const [teamMem, setTeamMem] = useState(form)
+
+  const updateForm = (inputName, inputValue) => {
+    setTeamMem({ ...teamMem, [inputName]: inputValue })
+
+    const submitForm = () => {
+      const member = {
+        username: teamMem.username.trim(),
+        email: teamMem.email.trim(),
+        role: teamMem.role,
+      }
+      if (!member.username || !member.email ) return
+      }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
-    </div>
-  );
+      <MembersForm>
+        values={teamMem} 
+        update ={updateForm} 
+        submit ={submitForm}
+      </MembersForm>
+      {
+        members.map(mems => {
+          return (
+            <Members key={mems.id} details={mems} />
+          )
+        })
+      }
+        </div>
+      );
+  }
 }
-
-export default App;
